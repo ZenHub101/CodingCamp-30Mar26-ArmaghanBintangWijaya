@@ -6,27 +6,27 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
 
 ## Tasks
 
-- [ ] 1. Set up project structure and data models
+- [x] 1. Set up project structure and data models
   - Create `index.html` with HTML skeleton, viewport meta tag, and Chart.js CDN script tag
   - Define the `Transaction` interface shape and `DEFAULT_CATEGORIES` constant in an inline `<script>`
   - Define the `SortOrder` type and initialise the in-memory `currentSortOrder` variable
   - _Requirements: 6.2, 7.1, 7.2_
 
 - [ ] 2. Implement the Storage module
-  - [ ] 2.1 Implement transaction storage functions
+  - [x] 2.1 Implement transaction storage functions
     - Write `getTransactions()`, `saveTransactions()`, `addTransaction()`, and `deleteTransaction()` using `localStorage`
     - Include try/catch for `SecurityError`/`QuotaExceededError` and malformed JSON fallback
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
-  - [ ]* 2.2 Write property test for transaction add round trip
+  - [ ] 2.2 Write property test for transaction add round trip
     - **Property 1: Transaction Add Round Trip**
     - **Validates: Requirements 1.2, 5.1**
-  - [ ]* 2.3 Write property test for transaction delete round trip
+  - [ ] 2.3 Write property test for transaction delete round trip
     - **Property 6: Transaction Delete Round Trip**
     - **Validates: Requirements 2.3, 5.2**
-  - [ ]* 2.4 Write property test for storage serialization round trip
+  - [ ] 2.4 Write property test for storage serialization round trip
     - **Property 9: Storage Serialization Round Trip**
     - **Validates: Requirements 5.4**
-  - [ ]* 2.5 Write unit tests for storage module
+  - [ ] 2.5 Write unit tests for storage module
     - Test add, delete, get with known inputs; test malformed JSON fallback; test unavailable storage banner
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
@@ -34,10 +34,10 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
   - Write `getCategories()`, `saveCategories()`, and `addCategory()` in the storage module
   - `addCategory()` must reject empty names and case-insensitive duplicates and display a validation message
   - _Requirements: 8.2, 8.3, 8.4_
-  - [ ]* 3.1 Write property test for custom category add round trip
+  - [ ] 3.1 Write property test for custom category add round trip
     - **Property 10: Custom Category Add Round Trip**
     - **Validates: Requirements 8.2, 8.3**
-  - [ ]* 3.2 Write property test for invalid category rejection
+  - [ ] 3.2 Write property test for invalid category rejection
     - **Property 11: Invalid Category Rejection**
     - **Validates: Requirements 8.4**
 
@@ -45,13 +45,13 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
   - Write `validateTransaction({ name, amount, category })` returning field-level error messages
   - Write `validateCategory(name, existingCategories)` returning an error message or null
   - _Requirements: 1.3, 1.4, 8.4_
-  - [ ]* 4.1 Write property test for empty field rejection
+  - [ ] 4.1 Write property test for empty field rejection
     - **Property 2: Empty Field Rejection**
     - **Validates: Requirements 1.3**
-  - [ ]* 4.2 Write property test for invalid amount rejection
+  - [ ] 4.2 Write property test for invalid amount rejection
     - **Property 3: Invalid Amount Rejection**
     - **Validates: Requirements 1.4**
-  - [ ]* 4.3 Write unit tests for validation logic
+  - [ ] 4.3 Write unit tests for validation logic
     - Test empty string, `"0"`, `"-5"`, `"abc"`, and valid inputs for each field
     - _Requirements: 1.3, 1.4_
 
@@ -62,7 +62,7 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
   - [ ] 6.1 Implement `renderBalance(transactions)`
     - Sum all transaction amounts and update the balance DOM element
     - _Requirements: 3.1, 3.2, 3.3_
-  - [ ]* 6.2 Write property test for balance invariant
+  - [ ] 6.2 Write property test for balance invariant
     - **Property 7: Balance Invariant**
     - **Validates: Requirements 3.2, 3.3**
   - [ ] 6.3 Implement the `render()` controller
@@ -79,10 +79,10 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
   - [ ] 7.2 Implement `handleDelete(id)`
     - Call `deleteTransaction(id)`, then call `render()`
     - _Requirements: 2.3_
-  - [ ]* 7.3 Write property test for transaction list renders all fields
+  - [ ] 7.3 Write property test for transaction list renders all fields
     - **Property 5: Transaction List Renders All Fields**
     - **Validates: Requirements 2.1**
-  - [ ]* 7.4 Write unit tests for transaction list
+  - [ ] 7.4 Write unit tests for transaction list
     - Test empty-state message, delete wiring, and field rendering with known inputs
     - _Requirements: 2.1, 2.4_
 
@@ -93,10 +93,10 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
     - Show placeholder state when transactions array is empty
     - Show fallback message if Chart.js failed to load from CDN
     - _Requirements: 4.1, 4.3, 4.4, 4.5_
-  - [ ]* 8.2 Write property test for chart data correctness
+  - [ ] 8.2 Write property test for chart data correctness
     - **Property 8: Chart Data Correctness**
     - **Validates: Requirements 4.1, 4.3**
-  - [ ]* 8.3 Write unit tests for chart data preparation
+  - [ ] 8.3 Write unit tests for chart data preparation
     - Test known category distributions and empty-state
     - _Requirements: 4.1, 4.3, 4.4_
 
@@ -111,10 +111,10 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
   - [ ] 9.4 Implement `handleAddCategory(event)` for the custom category control
     - Validate with `validateCategory`, show inline error on failure, call `addCategory` and refresh the selector on success
     - _Requirements: 8.1, 8.2, 8.4_
-  - [ ]* 9.5 Write property test for form reset after submission
+  - [ ] 9.5 Write property test for form reset after submission
     - **Property 4: Form Reset After Submission**
     - **Validates: Requirements 1.5**
-  - [ ]* 9.6 Write unit tests for form submission and category addition
+  - [ ] 9.6 Write unit tests for form submission and category addition
     - Test valid submission, each validation failure path, and form reset
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 8.1, 8.4_
 
@@ -126,10 +126,10 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
     - Group transactions by `YYYY-MM`, compute per-category totals per month, and render the summary table/list
     - Show empty-state message when transactions array is empty
     - _Requirements: 9.1, 9.2, 9.3, 9.4_
-  - [ ]* 11.2 Write property test for monthly grouping correctness
+  - [ ] 11.2 Write property test for monthly grouping correctness
     - **Property 12: Monthly Grouping Correctness**
     - **Validates: Requirements 9.1, 9.2, 9.3**
-  - [ ]* 11.3 Write unit tests for monthly summary
+  - [ ] 11.3 Write unit tests for monthly summary
     - Test transactions spanning multiple months and empty-state
     - _Requirements: 9.1, 9.2, 9.4_
 
@@ -139,13 +139,13 @@ Build a single-file, mobile-friendly web app (`index.html`) with Vanilla JS, CSS
     - Store selected order in `currentSortOrder` (in-memory only, not in Local Storage)
     - Call `render()` after sort change; sort is applied inside `renderTransactionList`
     - _Requirements: 10.1, 10.2, 10.3, 10.4_
-  - [ ]* 12.2 Write property test for sort correctness and stability
+  - [ ] 12.2 Write property test for sort correctness and stability
     - **Property 13: Sort Correctness and Stability**
     - **Validates: Requirements 10.2, 10.3**
-  - [ ]* 12.3 Write property test for sort does not affect storage order
+  - [ ] 12.3 Write property test for sort does not affect storage order
     - **Property 14: Sort Does Not Affect Storage Order**
     - **Validates: Requirements 10.4**
-  - [ ]* 12.4 Write unit tests for sort function
+  - [ ] 12.4 Write unit tests for sort function
     - Test each sort mode with known orderings
     - _Requirements: 10.1, 10.2, 10.3, 10.4_
 
