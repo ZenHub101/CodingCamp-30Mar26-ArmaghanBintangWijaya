@@ -351,8 +351,6 @@ function addTransaction() {
     date:     new Date().toISOString(),
   };
 
-  if (limit > 0) state.limit = limit;
-
   state.transactions.unshift(tx);
   save();
   renderAll();
@@ -445,6 +443,13 @@ function init() {
   if (state.limit > 0) {
     document.getElementById('spendingLimit').value = state.limit;
   }
+
+  // Event: Limit field — save immediately on change
+  document.getElementById('spendingLimit').addEventListener('change', e => {
+    state.limit = parseFloat(e.target.value) || 0;
+    save();
+    renderBalance();
+  });
 
   // Event: Add transaction
   document.getElementById('addTransactionBtn').addEventListener('click', addTransaction);
