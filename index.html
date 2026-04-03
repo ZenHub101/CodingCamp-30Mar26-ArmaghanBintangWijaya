@@ -29,8 +29,19 @@
 
   <!-- ── BALANCE HERO ────────────────────────────── -->
   <section class="balance-hero">
-    <p class="balance-label">Total Spent</p>
+    <p class="balance-label" id="balanceLabel">Balance</p>
     <h1 class="balance-amount" id="totalBalance">Rp 0</h1>
+    <div class="balance-stats">
+      <div class="balance-stat">
+        <span class="balance-stat-label">Budget</span>
+        <span class="balance-stat-value" id="statBudget">—</span>
+      </div>
+      <div class="balance-stat-divider"></div>
+      <div class="balance-stat">
+        <span class="balance-stat-label">Spent</span>
+        <span class="balance-stat-value" id="statSpent">Rp 0</span>
+      </div>
+    </div>
     <div class="balance-bar" id="balanceBar">
       <!-- category pills injected by JS -->
     </div>
@@ -85,8 +96,14 @@
           </select>
         </div>
         <div class="field field--sm">
-          <label for="spendingLimit">Limit (Rp)</label>
-          <input type="number" id="spendingLimit" placeholder="500000" min="0" />
+          <label for="spendingBudget">Budget (Rp)</label>
+          <input type="number" id="spendingBudget" placeholder="1000000" min="0" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="spendingLimit">Spending Limit (Rp)</label>
+          <input type="number" id="spendingLimit" placeholder="Optional alert threshold" min="0" />
         </div>
       </div>
       <div class="form-row form-row--actions">

@@ -7,6 +7,7 @@
 const STORAGE_KEY   = 'ledger_transactions';
 const CATS_KEY      = 'ledger_categories';
 const LIMIT_KEY     = 'ledger_limit';
+const BUDGET_KEY    = 'ledger_budget';
 const THEME_KEY     = 'ledger_theme';
 
 const BASE_CATEGORIES = [
@@ -25,6 +26,7 @@ let state = {
   categories:   [],
   limit:        0,
   sortMode:     'date-desc',
+  budget:       0,
   chart:        null,
 };
 
@@ -34,7 +36,8 @@ function load() {
     state.transactions = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     const cats = JSON.parse(localStorage.getItem(CATS_KEY));
     state.categories = cats || [...BASE_CATEGORIES];
-    state.limit = parseFloat(localStorage.getItem(LIMIT_KEY)) || 0;
+    state.limit   = parseFloat(localStorage.getItem(LIMIT_KEY))  || 0;
+    state.budget  = parseFloat(localStorage.getItem(BUDGET_KEY)) || 0;
   } catch {
     state.transactions = [];
     state.categories   = [...BASE_CATEGORIES];
@@ -46,6 +49,7 @@ function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.transactions));
   localStorage.setItem(CATS_KEY,    JSON.stringify(state.categories));
   localStorage.setItem(LIMIT_KEY,   state.limit.toString());
+  localStorage.setItem(BUDGET_KEY,  state.budget.toString());
 }
 
 /* ── CATEGORY HELPERS ────────────────────────── */
@@ -89,26 +93,41 @@ function computeTotals() {
 /* ── RENDER BALANCE HERO ─────────────────────── */
 function renderBalance() {
   const { grand } = computeTotals();
-  const el = document.getElementById('totalBalance');
-  el.textContent = formatRp(grand);
+  const el          = document.getElementById('totalBalance');
+  const labelEl     = document.getElementById('balanceLabel');
+  const statBudget  = document.getElementById('statBudget');
+  const statSpent   = document.getElementById('statSpent');
 
-  // Limit check
+  // If a budget is set, show remaining balance; otherwise show total spent
+  if (state.budget > 0) {
+    const remaining = state.budget - grand;
+    el.textContent  = formatRp(remaining);
+    labelEl.textContent = remaining >= 0 ? 'Balance' : 'Over Budget';
+    el.classList.toggle('over-limit', remaining < 0);
+    statBudget.textContent = formatRp(state.budget);
+    statBudget.className   = 'balance-stat-value';
+    statSpent.textContent  = formatRp(grand);
+    statSpent.className    = 'balance-stat-value';
+  } else {
+    el.textContent      = formatRp(grand);
+    labelEl.textContent = 'Total Spent';
+    el.classList.remove('over-limit');
+    statBudget.textContent = '—';
+    statBudget.className   = 'balance-stat-value';
+    statSpent.textContent  = formatRp(grand);
+    statSpent.className    = 'balance-stat-value';
+  }
+
+  // Limit check (separate from budget)
   const limitBanner  = document.getElementById('limitBanner');
   const limitMessage = document.getElementById('limitMessage');
   if (state.limit > 0 && grand >= state.limit) {
-    el.classList.add('over-limit');
     limitMessage.textContent = `Limit ${formatRp(state.limit)} exceeded!`;
     limitBanner.style.display = 'flex';
-    // Highlight each over-limit tx
-    document.querySelectorAll('.tx-item').forEach(item => {
-      item.classList.add('over-limit');
-    });
+    document.querySelectorAll('.tx-item').forEach(item => item.classList.add('over-limit'));
   } else {
-    el.classList.remove('over-limit');
     limitBanner.style.display = 'none';
-    document.querySelectorAll('.tx-item').forEach(item => {
-      item.classList.remove('over-limit');
-    });
+    document.querySelectorAll('.tx-item').forEach(item => item.classList.remove('over-limit'));
   }
 
   renderBalanceBar(grand);
@@ -439,10 +458,16 @@ function init() {
   populateCategorySelect();
   renderAll();
 
-  // Restore saved limit
-  if (state.limit > 0) {
-    document.getElementById('spendingLimit').value = state.limit;
-  }
+  // Restore saved budget & limit
+  if (state.budget > 0) document.getElementById('spendingBudget').value = state.budget;
+  if (state.limit  > 0) document.getElementById('spendingLimit').value  = state.limit;
+
+  // Event: Budget field — save immediately on change
+  document.getElementById('spendingBudget').addEventListener('change', e => {
+    state.budget = parseFloat(e.target.value) || 0;
+    save();
+    renderBalance();
+  });
 
   // Event: Limit field — save immediately on change
   document.getElementById('spendingLimit').addEventListener('change', e => {
